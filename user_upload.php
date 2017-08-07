@@ -39,23 +39,29 @@ function commandHandler()           //Handles inputs from the command line
                 echo "Invalid filename entered. Please try again\n";
                 commandHandler();
             }
-    } else if (strcmp($command, "--create_table") == 0) {
+    } //if --create_table was used
+    else if (strcmp($command, "--create_table") == 0) {
         create_table();
-    } else if (strcmp($command, "-u") == 0) {
+    } //if -u was used
+    else if (strcmp($command, "-u") == 0) {
         global $user;
         echo "MySQL username is $user\n";
         commandHandler();
-    } else if (strcmp($command, "-p") == 0) {
+    } //if -p was used
+    else if (strcmp($command, "-p") == 0) {
         global $password;
         echo "MySQL password is $password\n";
         commandHandler();
-    } else if (strcmp($command, "-h") == 0) {
+    }//if -h was used
+    else if (strcmp($command, "-h") == 0) {
         global $server;
         echo "MySQL server is $server";
         commandHandler();
-    } else if (strcmp($command, "--exit") == 0) {
+    }//if --exit was used
+    else if (strcmp($command, "--exit") == 0) {
         echo "Goodbye";
-    } else {
+    }//if anything other than a valid command was entered
+    else {
         echo "Invalid command. Please enter a valid command.\n";
         commandHandler();
     }
@@ -72,17 +78,47 @@ function fileCommand()              //--file was input as the command
     fclose($file);
 }
 
-function create_table()
+function create_table()             //this function opens a MySQL connection and creates a table
 {
     //This causes this function to use the global variables of these names as if they were local
     global $server, $user, $password;
-    $mysqli = new mysqli($server, $user, $password);
-    if ($mysqli->connect_error) {
-        die('Connect Error (' . $mysqli->connect_errno . ') '
-            . $mysqli->connect_error);
+
+    //Opens a connection to the MySQL server
+    $conn = new mysqli($server, $user, $password);
+    if ($conn->connect_error) {
+        die('Connect Error (' . $conn->connect_errno . ') '
+            . $conn->connect_error);
     } else echo "Successfully connected to MySQL server.\n";
 
-    $mysqli->close();
+    // Create database
+    $query = "CREATE DATABASE IF NOT EXISTS myDB";
+    if (mysqli_query($conn, $query)) {
+        echo "Success creating database\n";
+    } else {
+        echo "Failure creating database\n";
+    }
+
+    //Checks that the database exists
+    //echo mysqli_select_db($conn, myDB);
+
+    //Selects the database
+    mysqli_select_db($conn, myDB);
+
+    //Create the table
+    $sql = "CREATE TABLE userTable (
+    firstname VARCHAR(30) NOT NULL,
+    lastname VARCHAR(30) NOT NULL,
+    email VARCHAR(30) NOT NULL
+    )";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "Table userTable created successfully\n";
+    } else {
+        echo "Error creating table: " . mysqli_error($conn) . "\n";
+    }
+
+    //Closes the connection
+    $conn->close();
 }
 
 function printHelp()                //This function prints out the help menu
