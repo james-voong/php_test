@@ -1,5 +1,5 @@
 <?php
-echo "script init\n";
+echo "script start\n";
 
 for ($i = 1; $i <= 100; $i++) {
 
