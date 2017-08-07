@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="862423f5-2b30-4f19-a52f-12a4d3fef78c" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_upload.php" afterPath="$PROJECT_DIR$/user_upload.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,10 +16,10 @@
       <file leaf-file-name="user_upload.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/user_upload.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="406">
-              <caret line="78" column="1" lean-forward="true" selection-start-line="78" selection-start-column="1" selection-end-line="78" selection-end-column="1" />
+            <state relative-caret-position="586">
+              <caret line="55" column="35" lean-forward="false" selection-start-line="55" selection-start-column="35" selection-end-line="55" selection-end-column="35" />
               <folding>
-                <element signature="e#3155#3235#0#PHP" expanded="false" />
+                <element signature="e#3643#3723#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -115,12 +114,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1502079253497</updated>
-      <workItem from="1502079254594" duration="11263000" />
+      <workItem from="1502079254594" duration="12378000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11263000" />
+    <option name="totallyTimeSpent" value="12378000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="794" extended-state="6" />
@@ -174,10 +173,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/user_upload.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="78" column="1" lean-forward="true" selection-start-line="78" selection-start-column="1" selection-end-line="78" selection-end-column="1" />
+        <state relative-caret-position="586">
+          <caret line="55" column="35" lean-forward="false" selection-start-line="55" selection-start-column="35" selection-end-line="55" selection-end-column="35" />
           <folding>
-            <element signature="e#3155#3235#0#PHP" expanded="false" />
+            <element signature="e#3643#3723#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>

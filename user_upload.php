@@ -5,7 +5,6 @@ $user = "root";
 $password = "password";
 
 echo "Script init\n";
-connectMySQLi();
 commandHandler();
 
 
@@ -42,6 +41,20 @@ function commandHandler()           //Handles inputs from the command line
             }
     } else if (strcmp($command, "--create_table") == 0) {
         create_table();
+    } else if (strcmp($command, "-u") == 0) {
+        global $user;
+        echo "MySQL username is $user\n";
+        commandHandler();
+    } else if (strcmp($command, "-p") == 0) {
+        global $password;
+        echo "MySQL password is $password\n";
+        commandHandler();
+    } else if (strcmp($command, "-h") == 0) {
+        global $server;
+        echo "MySQL server is $server";
+        commandHandler();
+    } else if (strcmp($command, "--exit") == 0) {
+        echo "Goodbye";
     } else {
         echo "Invalid command. Please enter a valid command.\n";
         commandHandler();
@@ -61,7 +74,15 @@ function fileCommand()              //--file was input as the command
 
 function create_table()
 {
+    //This causes this function to use the global variables of these names as if they were local
+    global $server, $user, $password;
+    $mysqli = new mysqli($server, $user, $password);
+    if ($mysqli->connect_error) {
+        die('Connect Error (' . $mysqli->connect_errno . ') '
+            . $mysqli->connect_error);
+    } else echo "Successfully connected to MySQL server.\n";
 
+    $mysqli->close();
 }
 
 function printHelp()                //This function prints out the help menu
@@ -72,21 +93,11 @@ function printHelp()                //This function prints out the help menu
     echo "-u – MySQL username\n";
     echo "-p – MySQL password\n";
     echo "-h – MySQL host\n";
+    echo "--exit - this will end the script";
     commandHandler();
 }
 
-function connectMySQLi()
-{
-    //This causes this function to use the global variables of these names as if they were local
-    global $server, $user, $password;
-    $mysqli = new mysqli($server, $user, $password);
-    if ($mysqli->connect_error) {
-        die('Connect Error (' . $mysqli->connect_errno . ') '
-            . $mysqli->connect_error);
-    } else echo "Successfully connected to MySQL server.\n";
 
-//    $mysqli->close();
-}
 
 /**
  * Created by PhpStorm.
