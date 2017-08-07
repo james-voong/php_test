@@ -5,8 +5,9 @@ $user = "root";
 $password = "password";
 
 echo "Script init\n";
-commandHandler();
 
+//commandHandler();
+validateEmail("asdf");
 
 echo "Script end\n";
 
@@ -73,7 +74,13 @@ function fileCommand()              //--file was input as the command
     $file = fopen("users.csv", "r");
 
     while (!feof($file)) {
-        print_r(fgetcsv($file));
+        $array = fgetcsv($file);
+        $firstname = sanitiseString($array[0]);
+        $lastname = sanitiseString($array[1]);
+        if (validateEmail($array[2]) == true) {
+            $email = trim(strtolower($array[2]));
+        }
+
     }
     fclose($file);
 }
@@ -135,6 +142,29 @@ function printHelp()                //This function prints out the help menu
 }
 
 
+function sanitiseString($string)      //This function sanitises strings by removing special characters for placement into a table
+{
+    $string = preg_replace("/[^A-Za-z']/", "", $string);
+    $string = trim(ucfirst(strtolower($string)));
+    return $string;
+}
+
+function validateEmail($string)        //Sanitises and validates email addresses
+{
+
+    //Checks for the presence of invalid characters, displays an error message and then returns false
+    if (preg_match("/[^A-Za-z0-9@.]/", $string)) {
+        echo($string . " is an invalid email address.\n");
+        return false;
+    }
+    //Checks for correct email formatting and returns false if invalid
+    if (!filter_var($string, FILTER_VALIDATE_EMAIL)) {
+        echo($string . " is an invalid email address.\n");
+        return false;
+    }
+    //Return true is email format is accepted
+    return true;
+}
 
 /**
  * Created by PhpStorm.
