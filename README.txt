@@ -1,3 +1,12 @@
+Project
+---------------------------------
+foobar.php prints from 1-100 with three exceptions:
+1. If a number is divisible by 3 it will instead print “foo”.
+2. If a number is divisible by 5 it will instead print “bar”.
+3. If a number is divisible by both 3 and 5 it will instead print “foobar”.
+
+user_upload.php takes users.csv as input, creates a table in MySQL and copies over the contents if the email passes validation.
+
 Assumptions
 ---------------------------------
 Runs through command line
