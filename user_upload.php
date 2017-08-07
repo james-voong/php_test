@@ -1,7 +1,11 @@
 <?php
+//details for MySQL go here
+$server = "127.0.0.1";
+$user = "root";
+$password = "password";
 
 echo "Script init\n";
-
+connectMySQLi();
 commandHandler();
 
 
@@ -36,6 +40,8 @@ function commandHandler()           //Handles inputs from the command line
                 echo "Invalid filename entered. Please try again\n";
                 commandHandler();
             }
+    } else if (strcmp($command, "--create_table") == 0) {
+        create_table();
     } else {
         echo "Invalid command. Please enter a valid command.\n";
         commandHandler();
@@ -53,6 +59,11 @@ function fileCommand()              //--file was input as the command
     fclose($file);
 }
 
+function create_table()
+{
+
+}
+
 function printHelp()                //This function prints out the help menu
 {
     echo "--file [csv file name] – this is the name of the CSV to be parsed\n";
@@ -61,9 +72,20 @@ function printHelp()                //This function prints out the help menu
     echo "-u – MySQL username\n";
     echo "-p – MySQL password\n";
     echo "-h – MySQL host\n";
-
     commandHandler();
+}
 
+function connectMySQLi()
+{
+    //This causes this function to use the global variables of these names as if they were local
+    global $server, $user, $password;
+    $mysqli = new mysqli($server, $user, $password);
+    if ($mysqli->connect_error) {
+        die('Connect Error (' . $mysqli->connect_errno . ') '
+            . $mysqli->connect_error);
+    } else echo "Successfully connected to MySQL server.\n";
+
+//    $mysqli->close();
 }
 
 /**
