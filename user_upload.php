@@ -105,10 +105,11 @@ function create_table()             //this function opens a MySQL connection and
     mysqli_select_db($conn, myDB);
 
     //Create the table
-    $sql = "CREATE TABLE userTable (
+    $sql = "CREATE TABLE IF NOT EXISTS userTable (
     firstname VARCHAR(30) NOT NULL,
     lastname VARCHAR(30) NOT NULL,
-    email VARCHAR(30) NOT NULL
+    email VARCHAR(30) NOT NULL,
+    UNIQUE (email)
     )";
 
     if (mysqli_query($conn, $sql)) {
