@@ -3,16 +3,25 @@
 $server = "127.0.0.1";
 $user = "root";
 $password = "password";
+$conn;
 
 echo "Script init\n";
 
-//commandHandler();
-validateEmail("asdf");
+//Opens a connection to the MySQL server
+$conn = new mysqli($server, $user, $password);
+if ($conn->connect_error) {
+    die('Connect Error (' . $conn->connect_errno . ') '
+        . $conn->connect_error);
+} else echo "Successfully connected to MySQL server.\n";
+
+commandHandler();
+
 
 echo "Script end\n";
 
 function commandHandler()           //Handles inputs from the command line
 {
+    global $conn;
     //Reads the input from the command line
     $command = readline("Enter command (enter --help for full commands list): ");
     $command = trim($command);
@@ -60,6 +69,8 @@ function commandHandler()           //Handles inputs from the command line
         commandHandler();
     }//if --exit was used
     else if (strcmp($command, "--exit") == 0) {
+        //Closes the connection
+        $conn->close();
         echo "Goodbye";
     }//if anything other than a valid command was entered
     else {
@@ -70,32 +81,28 @@ function commandHandler()           //Handles inputs from the command line
 
 function fileCommand()              //--file was input as the command
 {
+
+    create_table();
     //users.csv is hardcoded as the filename because the assumptions state that the .csv file will be named as such.
     $file = fopen("users.csv", "r");
 
     while (!feof($file)) {
         $array = fgetcsv($file);
-        $firstname = sanitiseString($array[0]);
-        $lastname = sanitiseString($array[1]);
+        $firstName = sanitiseString($array[0]);
+        $lastName = sanitiseString($array[1]);
         if (validateEmail($array[2]) == true) {
             $email = trim(strtolower($array[2]));
+            $sql = "INSERT INTO userTable (firstname, lastname, email)
+            VALUES ($firstName, $lastName, $email)";
         }
-
     }
+
     fclose($file);
 }
 
 function create_table()             //this function opens a MySQL connection and creates a table
 {
-    //This causes this function to use the global variables of these names as if they were local
-    global $server, $user, $password;
-
-    //Opens a connection to the MySQL server
-    $conn = new mysqli($server, $user, $password);
-    if ($conn->connect_error) {
-        die('Connect Error (' . $conn->connect_errno . ') '
-            . $conn->connect_error);
-    } else echo "Successfully connected to MySQL server.\n";
+    global $conn;
 
     // Create database
     $query = "CREATE DATABASE IF NOT EXISTS myDB";
@@ -115,7 +122,7 @@ function create_table()             //this function opens a MySQL connection and
     $sql = "CREATE TABLE IF NOT EXISTS userTable (
     firstname VARCHAR(30) NOT NULL,
     lastname VARCHAR(30) NOT NULL,
-    email VARCHAR(30) NOT NULL,
+    email VARCHAR(50) NOT NULL,
     UNIQUE (email)
     )";
 
@@ -125,8 +132,6 @@ function create_table()             //this function opens a MySQL connection and
         echo "Error creating table: " . mysqli_error($conn) . "\n";
     }
 
-    //Closes the connection
-    $conn->close();
 }
 
 function printHelp()                //This function prints out the help menu

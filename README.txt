@@ -26,4 +26,3 @@ String sanitation is only rudimentary, known issues:
   Dual names are not accounted for. e.g. Anna-Jane will return as Annajane
   Comma's are allowed, including double comma's
   Accented characters are not allowed even though some names may have them
-  
