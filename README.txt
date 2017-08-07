@@ -12,7 +12,6 @@ Script Command Line Directives
 The PHP script includes these command line options (directives):
 --file [csv file name] – this is the name of the CSV to be parsed
 --create_table – this will cause the MySQL users table to be built (and no further action will be taken)
---dry_run – this will be used with the --file directive in the instance that we want to run the script but not insert into the DB. All other functions will be executed, but the database won't be altered.
 -u – Prints MySQL username
 -p – Prints MySQL password
 -h – Prints MySQL host
@@ -26,3 +25,7 @@ String sanitation is only rudimentary, known issues:
   Dual names are not accounted for. e.g. Anna-Jane will return as Annajane
   Comma's are allowed, including double comma's
   Accented characters are not allowed even though some names may have them
+
+—dry_run
+---------------------------------
+Unsure what this is supposed to do so it has been excluded for the time being.
