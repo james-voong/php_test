@@ -4,19 +4,6 @@ echo "Script init\n";
 
 commandHandler();
 
-//$handle = fopen($_FILES["users.csv"]["tmp_name"], 'r');
-//echo "$handle";
-
-//$file = fopen("$command", "r");
-
-//while (!feof($file)) {
-//    if (feof == true) {
-//        echo "Invalid file name.\n";
-//        break;
-//    }
-//    print_r(fgetcsv($file));
-//}
-//fclose($file);
 
 echo "Script end\n";
 
@@ -57,7 +44,13 @@ function commandHandler()           //Handles inputs from the command line
 
 function fileCommand()              //--file was input as the command
 {
-    echo "success";
+    //users.csv is hardcoded as the filename because the assumptions state that the .csv file will be named as such.
+    $file = fopen("users.csv", "r");
+
+    while (!feof($file)) {
+        print_r(fgetcsv($file));
+    }
+    fclose($file);
 }
 
 function printHelp()                //This function prints out the help menu
